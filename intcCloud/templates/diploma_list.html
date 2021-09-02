@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block diplomalist %}
+<div class="container">
+  <h1 class="display-4 mb-5 mt-5 text-center">Список дипломных проектов</h1>
+  <div class="container">
+    <form class="mr-auto mb-5">
+      <script>
+        function myFunction() {
+          var input, filter, table, tr, td, cell, i, j;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+          for (i = 1; i < tr.length; i++) {
+            // Hide the row initially.
+            tr[i].style.display = "none";
+
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+              cell = tr[i].getElementsByTagName("td")[j];
+              if (cell) {
+                if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                  break;
+                }
+              }
+            }
+          }
+        }
+      </script>
+      <div class="input-group mb-3">
+        <input id="myInput" onkeyup="myFunction()" type="text" class="form-control" placeholder="Поиск"
+          aria-label="Recipient's username" aria-describedby="button-addon2">
+      </div>
+    </form>
+  </div>
+  <div id="subject-list">
+    <div class="container-fluid table-responsive">
+      <table id="myTable" class="table table-hover text-center">
+        <thead class="bg-primary">
+          <tr>
+            <th scope="col" class="text-white">Специальность</th>
+            <th scope="col" class="text-white">Квалификация</th>
+            <th scope="col" class="text-white">Группа</th>
+            <th scope="col" class="text-white">Тема</th>
+            <th scope="col" class="text-white">ФИО студента</th>
+            <th scope="col" class="text-white">Учебный год</th>
+            <th scope="col" colspan="2" class="text-white">Файл</th>
+            {% if request.user.is_superuser %}
+              <th scope="col" class="text-white">Дата публикации</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for document in diplomas %}
+          <tr>
+            <td>{{ document.speciality }}</td>
+            <td>{{ document.qualification }}</td>
+            <td>{{ document.group }}</td>
+            <td>{{ document.theme }}</td>
+            <td>{{ document.student }}</td>
+            <td>{{ document.year }}</td>
+            <td><a href="{{ document.document.url }}" class="btn btn-outline-success">Скачать</a></td>
+            <form method="post" action="{% url 'delete_diploma' document.pk %}">
+              {% csrf_token %}
+              {% if request.user.is_superuser %}
+              <td><button class="btn btn-outline-danger">Удалить</button></td>
+              <td>{{ document.postDate }}</td>
+              {% endif %}
+            </form>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br><br><br>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block documentlist %}
+<div class="container-fluid">
+  <h1 class="display-4 mb-5 mt-5 text-center">Таблица документов (2020-2021)</h1>
+  <div id="top-btn">
+    <a href="#">Вверх</a>
+  </div>
+  <style>
+    #top-btn {
+
+      display: inline-block;
+      position: fixed;
+      bottom: 10px;
+      left: 0;
+    }
+    #top-btn a {
+      background-color: #446ff6;
+      color: #fff;
+      padding: 14px;
+    }
+  </style>
+  <div class="container">
+    <form class="mr-auto mb-5">
+      <script>
+        function myFunction() {
+          var input, filter, table, tr, td, cell, i, j;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("myTable");
+          tr = table.getElementsByTagName("tr");
+          for (i = 1; i < tr.length; i++) {
+            // Hide the row initially.
+            tr[i].style.display = "none";
+
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+              cell = tr[i].getElementsByTagName("td")[j];
+              if (cell) {
+                if (cell.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                  break;
+                }
+              }
+            }
+          }
+        }
+      </script>
+      <div class="input-group mb-3">
+        <input id="myInput" onkeyup="myFunction()" type="text" class="form-control" placeholder="Поиск"
+          aria-label="Recipient's username" aria-describedby="button-addon2">
+      </div>
+    </form>
+  </div>
+  {% if request.user.is_superuser %}
+  <div class="mt-5 mb-5">
+  <p class="text-primary">Counter: {{ count }}</p>
+  </div>
+  {% endif %}
+  <div id="subject-list">
+    <div class="container-fluid table-responsive">
+      <table id="myTable" class="table table-hover text-center">
+        <thead class="bg-primary">
+          <tr>
+            <th scope="col" class="text-white">ФИО преподавателя</th>
+            <th scope="col" class="text-white">Модуль</th>
+            <th scope="col" class="text-white">Дисциплина</th>
+	    <th scope="col" class="text-white">Type</th>
+            <th scope="col" class="text-white">Цикл</th>
+            <th scope="col" class="text-white">Группа</th>
+            <th scope="col" class="text-white">Учебный год</th>
+            <th colspan="2" scope="col" class="text-white">Файл</th>
+            {% if request.user.is_superuser %}
+              <th scope="col" class="text-white">Дата публикации</th>
+              {% endif %}
+            <!--<th scope="col" class="text-white">Действие</th>-->
+          </tr>
+        </thead>
+        <tbody>
+          {% for document in documents %}
+          <tr>
+            <td>{{ document.teacherName }}</td>
+            <td>{{ document.documentName }}</td>
+            <td>{{ document.documentName2 }}</td>
+	    <td><span class="text-white badge bg-primary">{{ document.documentType }}</span></td>
+            <td>{{ document.cycleType }}</td>
+            <td>{{ document.studyGroup }}</td>
+            <td>{{ document.year }}</td>
+            <td><a href="https://view.officeapps.live.com/op/embed.aspx?src={{ document.document.url }}" class="btn btn-outline-success">Скачать</a></td>
+            <form method="post" action="{% url 'delete_document' document.pk %}">
+              {% csrf_token %}
+              {% if request.user.is_superuser %}
+
+              <td><button onclick="alert('Удалено')" class="btn btn-outline-danger">Удалить</button></td>
+              <td>{{ document.postDate }}</td>
+              {% endif %}
+            </form>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br><br><br>
+{% endblock %}

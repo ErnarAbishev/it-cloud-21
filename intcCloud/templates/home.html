@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div id="main">
+        <div class="pricing-header mb-5 mx-auto text-center">
+            <h1 class="display-4 mb-3 text-white">INTC Cloud</h1>
+            <p class="lead mb-5 text-white">Сохраните свои документы в безопасном хранилище INTC Cloud.</p>
+            <a href="{% url 'document_list' %}" class="btn btn-outline-light btn-lg">Список документов (2020-2021)</a>
+            <a href="{% url 'document_list21' %}" class="btn btn-outline-light btn-lg">Список документов (2021-2022)</a>
+                <!--<a class="p-2 text-dark" href="{% url 'home' %}">Главная</a>
+                <a class="p-2 text-dark" href="{% url 'document_list' %}">Список документов (2020-2021)</a>
+                <a class="p-2 text-dark" href="{% url 'document_list21' %}">Список документов (2021-2022)</a>
+                <a class="p-2 text-dark" href="{% url 'diploma_list' %}">Список дипломных проектов</a>
+                <a class="p-2 text-dark" href="{% url 'upload_document21' %}">Загрузка документов</a>
+                <a class="p-2 text-dark" href="{% url 'upload_diploma' %}">Загрузка дипломных проектов</a>-->
+            </nav>
+        </div>
+    </div>
+    <div id="content">
+        <div class="container">
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading mb-4">Безопасный способ хранения файлов на <span class="text-muted">виртуальном сервере</span></h2>
+                    <p class="lead">Благодаря INTC Cloud хранилище объектов полезно для размещения статических ресурсов, например, для сохранения рабочих учебных программ. Это безопасно по сколько портал работает с VPS для дистанционного подключения.</p>
+                </div>
+                <div class="col-md-5">
+                    <img src="{% static '/img/vps-logo.png' %}" class="mb-5" width="100%" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

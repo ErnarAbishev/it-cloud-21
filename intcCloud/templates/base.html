@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="{% static '/img/logo.png' %}">
+    <title>INTC Cloud</title>
+</head>
+<style>
+    .form-control-file {
+        width: 300px;
+        border: 2px dashed grey;
+        border-radius: 5px;
+        display: block;
+        padding: 1.2em;
+        transition: border 300ms ease;
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        margin-bottom: .5rem;
+    }
+</style>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">INTC Cloud</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link mr-3" href="{% url 'home' %}">Главная</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-primary mr-3" href="{% url 'document_list21' %}">Список документов</a>
+        </li>
+          <li class="nav-item">
+          <a class="btn btn-outline-success mr-3" href="{% url 'upload_document21' %}">Загрузка документов</a>
+        </li>
+          <li class="nav-item">
+          <a class="btn btn-outline-danger" href="{% url 'signout' %}">Выход</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    {% block content %}
+    {% endblock %}
+
+    {% block uploaddocument %}
+    {% endblock %}
+
+    {% block documentlist %}
+    {% endblock %}
+
+    {% block uploaddiploma %}
+    {% endblock %}
+
+    {% block diplomalist %}
+    {% endblock %}
+    <footer class="bg-dark p-1 text-center">
+        <div class="container">
+            <a href="#"><img class="mb-4 mt-4" src="{% static '/img/logo.png' %}" alt="Logo" width="128"
+                    height="72"></a>
+            <p class="text-white">&copy; 2021-2022 INTC Cloud. Powered by <a href="https://www.instagram.com/404web.studio" class="badge badge-primary">404web.studio</a></p>
+            <p class="text-white">Техническая поддержка <a href="https://wa.me/+77087529320" class="badge badge-success">Helpdesk</a></p>
+        </div>
+    </footer>
+
+    <script src="{% static '/js/jquery-3.5.1.slim.min.js' %}"></script>
+    <script src="{% static '/js/popper.min.js' %}"></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>
